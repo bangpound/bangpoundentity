@@ -1,0 +1,43 @@
+<?php
+/**
+ * @file
+ * Code for the bangpoundentity feature.
+ */
+
+/**
+ * Implementation of hook_entity_info_alter()
+ */
+function bangpoundentity_entity_info_alter(&$entity_info) {
+
+  $entity_info['node']['view modes']['title_list_item'] = array(
+    'label' => t('Title list item'),
+    'custom settings' => TRUE,
+  );
+}
+
+function bangpoundentity_theme($existing, $type, $theme, $path) {
+  return array(
+    'node__title_list_item' => array(
+      'render element' => 'elements',
+      'template' => 'node--title-list-item',
+
+      // For entity view mode themes.
+      'entity key' => '#node',
+      'override preprocess functions' => TRUE,
+      'override process functions' => TRUE,
+    ),
+  );
+}
+
+function bangpoundentity_theme_registry_alter(&$theme_registry) {
+  $info = $theme_registry['node'];
+
+  $theme_registry['node__title_list_item']['preprocess functions'] = $info['preprocess functions'];
+  $theme_registry['node__title_list_item']['process functions'] = $info['process functions'];
+}
+
+function bangpoundentity_preprocess_node(&$variables) {
+  if ($variables['view_mode'] == 'title_list_item') {
+    $variables['theme_hook_suggestion'] = 'node__title_list_item';
+  }
+}
