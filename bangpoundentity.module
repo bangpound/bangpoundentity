@@ -110,7 +110,40 @@ function bangpoundentity_theme($existing, $type, $theme, $path) {
   );
 }
 
+/**
+ * Implement hook_theme_registry_alter().
+ *
+ * There's no consistent way to find an entity in the theme stack. To avoid conflicts, all
+ * entity themes in the registry are annotated with the name of the entity's key in the
+ * render element array. The preprocess function is only added to specific theme entities.
+ *
+ * Currently all entities are themed with a render element instead of variables.
+ * field_attach_view() adds entity type and bundle info to the render elements.
+ */
 function bangpoundentity_theme_registry_alter(&$theme_registry) {
+  // Overload theme registry with property name of entity in render element or variables.
+  $entity_themes = array(
+
+    // Node and user module are required, so these themes are always present.
+    'node' => '#node',
+    'user_profile' => '#account',
+
+    // These entity themes are optional core or contrib.
+    'comment' => '#comment',
+    'entity' => '#entity',
+    'fieldable_panels_pane' => '#element',
+    'file_entity' => '#file',
+    'taxonomy_term' => '#term',
+  );
+
+  foreach ($entity_themes as $hook => $entity_key) {
+    if (isset($theme_registry[$hook])) {
+      $theme_registry[$hook]['entity key'] = $entity_key;
+      $theme_registry[$hook]['preprocess functions'][] = 'bangpoundentity_template_suggest_view_mode';
+    }
+  }
+
+  // Copy node theme to node__title_list_item.
   $info = $theme_registry['node'];
 
   $theme_registry['node__title_list_item']['preprocess functions'] = $info['preprocess functions'];
@@ -167,41 +200,6 @@ function bangpoundentity_template_suggest_view_mode(&$variables, $hook) {
     if (!in_array("{$entity_type}__{$id}__{$view_mode}", $suggestions)) {
       $index = array_search("{$entity_type}__{$id}", $suggestions);
       array_splice($suggestions, $index + 1, 0, "{$entity_type}__{$id}__{$view_mode}");
-    }
-  }
-}
-
-/**
- * Implement hook_theme_registry_alter().
- *
- * There's no consistent way to find an entity in the theme stack. To avoid conflicts, all
- * entity themes in the registry are annotated with the name of the entity's key in the
- * render element array. The preprocess function is only added to specific theme entities.
- *
- * Currently all entities are themed with a render element instead of variables.
- * field_attach_view() adds entity type and bundle info to the render elements.
- */
-function bangpoundentity_theme_registry_alter(&$theme_registry) {
-
-  // Overload theme registry with property name of entity in render element or variables.
-  $entity_themes = array(
-
-    // Node and user module are required, so these themes are always present.
-    'node' => '#node',
-    'user_profile' => '#account',
-
-    // These entity themes are optional core or contrib.
-    'comment' => '#comment',
-    'entity' => '#entity',
-    'fieldable_panels_pane' => '#element',
-    'file_entity' => '#file',
-    'taxonomy_term' => '#term',
-  );
-
-  foreach ($entity_themes as $hook => $entity_key) {
-    if (isset($theme_registry[$hook])) {
-      $theme_registry[$hook]['entity key'] = $entity_key;
-      $theme_registry[$hook]['preprocess functions'][] = 'bangpoundentity_template_suggest_view_mode';
     }
   }
 }
