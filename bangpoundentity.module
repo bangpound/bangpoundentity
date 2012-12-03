@@ -53,9 +53,9 @@ function bangpoundentity_menu_alter(&$items) {
 function bangpoundentity_entity_view_alter(&$build, $type) {
   $hook = $build['#theme'];
   $hooks = theme_get_registry(FALSE);
-  $entity_key = $hooks[$hook]['entity key'];
 
-  if (!empty($entity_key)) {
+  if (isset($hooks[$hook]['entity key'])) {
+    $entity_key = $hooks[$hook]['entity key'];
     $entity = $build[$entity_key];
     $entity_type = $build['#entity_type'];
     $view_mode = $build['#view_mode'];
