@@ -133,5 +133,20 @@ function bangpoundentity_theme_registry_alter(&$theme_registry) {
 function bangpoundentity_preprocess_node(&$variables) {
   if ($variables['view_mode'] == 'title_list_item') {
     $variables['theme_hook_suggestion'] = 'node__title_list_item';
+
+    // Add comment count to link title as in node_title_list().
+    $node = $variables['node'];
+    if (!empty($node->comment_count)) {
+      $variables['title_attributes_array']['title'] = format_plural($node->comment_count, '1 comment', '@count comments');
+    }
+  }
+}
+
+/**
+ * Implement hook_process_node().
+ */
+function bangpoundentity_process_node(&$variables) {
+  if ($variables['view_mode'] == 'title_list_item') {
+    $variables['wrapper'] = !empty($variables['title_prefix']) | !empty($variables['title_suffix']);
   }
 }
