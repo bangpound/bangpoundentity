@@ -4,6 +4,8 @@
 This developer helper module adds contextual links to Field UI's display settings for
 any entity being displayed.
 
+![Screenshot](http://f.cl.ly/items/1M0Y2l1r0J3R441k321o/Fullscreen%2012:2:12%2010:48%20PM.png)
+
 This module depends on [Entity View Modes module][entity_view_mode] and some patches in
 that project's queue. These patches fix some bugs in that project and decorate the theme
 registry with entity information that is used to generate template suggestions.
