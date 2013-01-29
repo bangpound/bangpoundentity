@@ -71,16 +71,8 @@ function bangpoundentity_menu_alter(&$items) {
  * use hook_entity_view_alter() to add the node's links.
  */
 function bangpoundentity_entity_view_alter(&$build, $type) {
-  $hook = $build['#theme'];
-  $hooks = theme_get_registry(FALSE);
-
-  if (isset($hooks[$hook]['entity key'])) {
-    $entity_key = $hooks[$hook]['entity key'];
-    $entity = $build[$entity_key];
-    $entity_type = $build['#entity_type'];
-    $view_mode = $build['#view_mode'];
-
-    list($id, , $bundle) = entity_extract_ids($entity_type, $entity);
+  if (!empty($build['#entity_view_mode'])) {
+    extract($build['#entity_view_mode']);
 
     // Avoid adding suggestions for lone bundles and default view modes.
     $info = entity_get_info($entity_type);
@@ -128,7 +120,6 @@ function bangpoundentity_theme($existing, $type, $theme, $path) {
       'template' => 'node--title-list-item',
 
       // For entity view mode themes.
-      'entity key' => '#node',
       'override preprocess functions' => TRUE,
       'override process functions' => TRUE,
     ),
