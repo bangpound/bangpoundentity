@@ -118,24 +118,9 @@ function bangpoundentity_theme($existing, $type, $theme, $path) {
     'node__title_list_item' => array(
       'render element' => 'elements',
       'template' => 'node--title-list-item',
-
-      // For entity view mode themes.
-      'override preprocess functions' => TRUE,
-      'override process functions' => TRUE,
+      'base hook' => 'node',
     ),
   );
-}
-
-/**
- * Implement hook_theme_registry_alter().
- */
-function bangpoundentity_theme_registry_alter(&$theme_registry) {
-
-  // Copy node theme to node__title_list_item.
-  $info = $theme_registry['node'];
-
-  $theme_registry['node__title_list_item']['preprocess functions'] = $info['preprocess functions'];
-  $theme_registry['node__title_list_item']['process functions'] = $info['process functions'];
 }
 
 /**
