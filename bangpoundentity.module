@@ -71,7 +71,7 @@ function bangpoundentity_menu_alter(&$items) {
  * use hook_entity_view_alter() to add the node's links.
  */
 function bangpoundentity_entity_view_alter(&$build, $type) {
-  if (!empty($build['#entity_view_mode'])) {
+  if (user_access('access contextual links') && !empty($build['#entity_view_mode'])) {
     extract($build['#entity_view_mode']);
 
     // Avoid adding suggestions for lone bundles and default view modes.
