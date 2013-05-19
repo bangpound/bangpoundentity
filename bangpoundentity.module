@@ -72,7 +72,9 @@ function bangpoundentity_menu_alter(&$items) {
  */
 function bangpoundentity_entity_view_alter(&$build, $type) {
   if (user_access('access contextual links') && !empty($build['#entity_view_mode'])) {
-    extract($build['#entity_view_mode']);
+    $entity_type = $build['#entity_view_mode']['entity_type'];
+    $bundle = $build['#entity_view_mode']['bundle'];
+    $id = $build['#entity_view_mode']['id'];
 
     // Avoid adding suggestions for lone bundles and default view modes.
     $info = entity_get_info($entity_type);
