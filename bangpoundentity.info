@@ -2,5 +2,6 @@ name = !&# Entity
 description = Provides entity view modes
 core = 7.x
 php = 5.2.4
+package = !&#
 dependencies[] = entity_view_mode
 dependencies[] = contextual
