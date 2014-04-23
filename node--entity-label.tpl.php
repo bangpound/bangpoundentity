@@ -1,7 +1,9 @@
 <?php
 /**
  * @file
- * Node template
+ * Node entity label (title) template
+ *
+ * @ingroup themeable
  */
 ?>
 <?php if ($wrapper): ?>

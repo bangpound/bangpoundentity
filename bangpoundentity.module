@@ -5,6 +5,18 @@
  */
 
 /**
+ * Implements hook_entity_info_alter().
+ */
+function bangpoundentity_entity_info_alter(&$info) {
+  array_walk($info, function (&$info) {
+    $info['view modes']['entity_label'] = array(
+      'label' => t('Entity label'),
+      'custom settings' => FALSE,
+    );
+  });
+}
+
+/**
  * Implement hook_contextual_links_view_alter().
  */
 function bangpoundentity_contextual_links_view_alter(&$element, &$items) {
@@ -106,9 +118,9 @@ function bangpoundentity_entity_view_alter(&$build, $type) {
  */
 function bangpoundentity_theme($existing, $type, $theme, $path) {
   return array(
-    'node__title_list_item' => array(
+    'node__entity_label' => array(
       'render element' => 'elements',
-      'template' => 'node--title-list-item',
+      'template' => 'node--entity-label',
       'base hook' => 'node',
     ),
   );
@@ -118,8 +130,8 @@ function bangpoundentity_theme($existing, $type, $theme, $path) {
  * Implement hook_preprocess_node().
  */
 function bangpoundentity_preprocess_node(&$variables) {
-  if ($variables['view_mode'] == 'title_list_item') {
-    $variables['theme_hook_suggestion'] = 'node__title_list_item';
+  if ($variables['view_mode'] == 'entity_label') {
+    $variables['theme_hook_suggestion'] = 'node__entity_label';
 
     // Add comment count to link title as in node_title_list().
     $node = $variables['node'];
@@ -133,7 +145,7 @@ function bangpoundentity_preprocess_node(&$variables) {
  * Implement hook_process_node().
  */
 function bangpoundentity_process_node(&$variables) {
-  if ($variables['view_mode'] == 'title_list_item') {
+  if ($variables['view_mode'] == 'entity_label') {
     $variables['wrapper'] = !empty($variables['title_prefix']) | !empty($variables['title_suffix']);
   }
 }
