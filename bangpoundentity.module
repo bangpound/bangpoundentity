@@ -9,10 +9,12 @@
  */
 function bangpoundentity_entity_info_alter(&$info) {
   array_walk($info, function (&$info) {
-    $info['view modes']['entity_label'] = array(
-      'label' => t('Entity label'),
-      'custom settings' => FALSE,
-    );
+    if (!isset($info['view_modes']['entity_label'])) {
+      $info['view modes']['entity_label'] = array(
+        'label' => t('Entity label'),
+        'custom settings' => FALSE,
+      );
+    }
   });
 }
 
