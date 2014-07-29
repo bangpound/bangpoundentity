@@ -129,25 +129,33 @@ function bangpoundentity_theme($existing, $type, $theme, $path) {
 }
 
 /**
+ * Implement hook_preprocess().
+ */
+function bangpoundentity_preprocess(&$variables, $hook) {
+  if (in_array($hook, array('node')) && $variables['view_mode'] == 'entity_label') {
+    $variables['theme_hook_suggestions'][] = $hook .'__'. $variables['view_mode'];
+  }
+}
+
+/**
+ * Implement hook_process().
+ */
+function bangpoundentity_process(&$variables, $hook) {
+  if (in_array($hook, array('node')) && $variables['view_mode'] == 'entity_label') {
+    $variables['wrapper'] = !empty($variables['title_prefix']) | !empty($variables['title_suffix']);
+  }
+}
+
+/**
  * Implement hook_preprocess_node().
  */
 function bangpoundentity_preprocess_node(&$variables) {
   if ($variables['view_mode'] == 'entity_label') {
-    $variables['theme_hook_suggestion'] = 'node__entity_label';
 
     // Add comment count to link title as in node_title_list().
     $node = $variables['node'];
     if (!empty($node->comment_count)) {
       $variables['title_attributes_array']['title'] = format_plural($node->comment_count, '1 comment', '@count comments');
     }
-  }
-}
-
-/**
- * Implement hook_process_node().
- */
-function bangpoundentity_process_node(&$variables) {
-  if ($variables['view_mode'] == 'entity_label') {
-    $variables['wrapper'] = !empty($variables['title_prefix']) | !empty($variables['title_suffix']);
   }
 }
