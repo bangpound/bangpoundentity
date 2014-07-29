@@ -125,6 +125,11 @@ function bangpoundentity_theme($existing, $type, $theme, $path) {
       'template' => 'node--entity-label',
       'base hook' => 'node',
     ),
+    'taxonomy_term__entity_label' => array(
+      'render element' => 'elements',
+      'template' => 'taxonomy-term--entity-label',
+      'base hook' => 'taxonomy_term',
+    ),
   );
 }
 
@@ -132,7 +137,7 @@ function bangpoundentity_theme($existing, $type, $theme, $path) {
  * Implement hook_preprocess().
  */
 function bangpoundentity_preprocess(&$variables, $hook) {
-  if (in_array($hook, array('node')) && $variables['view_mode'] == 'entity_label') {
+  if (in_array($hook, array('node', 'taxonomy_term')) && $variables['view_mode'] == 'entity_label') {
     $variables['theme_hook_suggestions'][] = $hook .'__'. $variables['view_mode'];
   }
 }
@@ -141,7 +146,7 @@ function bangpoundentity_preprocess(&$variables, $hook) {
  * Implement hook_process().
  */
 function bangpoundentity_process(&$variables, $hook) {
-  if (in_array($hook, array('node')) && $variables['view_mode'] == 'entity_label') {
+  if (in_array($hook, array('node', 'taxonomy_term')) && $variables['view_mode'] == 'entity_label') {
     $variables['wrapper'] = !empty($variables['title_prefix']) | !empty($variables['title_suffix']);
   }
 }
