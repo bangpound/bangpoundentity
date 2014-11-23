@@ -1,0 +1,20 @@
+{
+    "name": "bangpound/entity-module",
+    "description": "Entity module",
+    "type": "drupal-module",
+    "license": "GPL-2.0+",
+    "require": {
+        "composer/installers": "~1.0"
+    },
+    "authors": [
+        {
+            "name": "Benjamin Doherty",
+            "email": "bjd@bangpound.org"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-7.x-1.x": "7.0.x-dev"
+        }
+    }
+}
