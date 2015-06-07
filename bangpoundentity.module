@@ -45,15 +45,17 @@ function bangpoundentity_menu() {
   $items = array();
   $infos = entity_get_info();
   foreach ($infos['node']['view modes'] as $view_mode => $settings) {
-    $items['node/%node/view/'. $view_mode] = array(
-      'title' => $settings['label'],
-      'type' => $view_mode == 'full' ? MENU_DEFAULT_LOCAL_TASK : MENU_LOCAL_TASK,
-      'page callback' => 'bangpoundentity_node_page_view',
-      'page arguments' => array(1, 3),
-      'file' => 'bangpoundentity.pages.inc',
-      'access callback' => 'user_access',
-      'access arguments' => array('administer content types'),
-    );
+    if ($settings['custom settings'] === TRUE) {
+      $items['node/%node/view/'. $view_mode] = array(
+        'title' => $settings['label'],
+        'type' => $view_mode == 'full' ? MENU_DEFAULT_LOCAL_TASK : MENU_LOCAL_TASK,
+        'page callback' => 'bangpoundentity_node_page_view',
+        'page arguments' => array(1, 3),
+        'file' => 'bangpoundentity.pages.inc',
+        'access callback' => 'user_access',
+        'access arguments' => array('administer content types'),
+      );
+    }
   }
   return $items;
 }
