@@ -15,6 +15,7 @@
     "extra": {
         "branch-alias": {
             "dev-7.x-1.x": "7.0.x-dev"
-        }
+        },
+        "installer-name": "bangpoundentity"
     }
 }
