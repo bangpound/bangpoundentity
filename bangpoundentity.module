@@ -97,7 +97,7 @@ function bangpoundentity_entity_view_alter(&$build, $type) {
     $settings = field_view_mode_settings($entity_type, $bundle);
 
     if (isset($info['bundles'][$bundle]['admin']['bundle argument'])) {
-      $path = implode('/', array_slice(explode('/', $info['bundles'][$bundle]['admin']['path']), 0, $info['bundles'][$bundle]['admin']['path'] - 1));
+      $path = implode('/', array_slice(explode('/', $info['bundles'][$bundle]['admin']['path']), 0, -1));
     }
     else {
       $path = $info['bundles'][$bundle]['admin']['path'];
