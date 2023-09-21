@@ -3,9 +3,6 @@
     "description": "Entity module",
     "type": "drupal-module",
     "license": "GPL-2.0+",
-    "require": {
-        "composer/installers": "~1.0"
-    },
     "authors": [
         {
             "name": "Benjamin Doherty",
